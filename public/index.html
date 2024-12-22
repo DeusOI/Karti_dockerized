@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&#9824;&#9829;КАРТАЏИИ 2025&#9830;&#9827;</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1> &#9824; &#9829; КАРТАЏИИ 2025 &#9830; &#9827;</h1>
+    <form id="game-form">
+        <label for="game-date">Дата:</label>
+        <input type="date" id="game-date" required>
+        <h2>Постави резултат од последната игра:</h2>
+        <div id="podium">
+
+            <div class="medal-container">
+                <div class="badge gold">🥇</div>
+                <div class="player position-1" draggable="true">
+                    <img class="player-img" src="images/eli.jpg" alt="Елена" />
+                    <div class="player-name">Елена</div>
+                </div>
+            </div>
+            <div class="medal-container">
+                <div class="badge silver">🥈</div>
+                <div class="player position-2" draggable="true">
+                    <img class="player-img" src="images/pance.jpg" alt="Панче" />
+                    <div class="player-name">Панче</div>
+                </div>
+            </div>
+            <div class="medal-container">
+                <div class="badge bronze">🥉</div>
+                <div class="player position-3" draggable="true">
+                    <img class="player-img" src="images/goci.jpg" alt="Грозданка" />
+                    <div class="player-name">Грозданка</div>
+                </div>
+            </div>
+            <div class="player position-4" draggable="true">
+                <img class="player-img" src="images/vase.jpg" alt="Васил" />
+                <div class="player-name">Васил</div>
+            </div>
+        </div>
+
+
+
+        <button id="save" type="submit">Зачувај игра</button>
+    </form>
+
+    <div class="table-container">
+        <h2>    🃏   Последни партии    🃏   </h2>
+        <table id="games-table">
+            <thead>
+                <tr>
+
+                    <th>Дата</th>
+                    <th>Прво место</th>
+                    <th>Второ место</th>
+                    <th>Трето место</th>
+                    <th>Четврто место</th>
+                    <th>Избриши</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>    👑  Табела со резултати   👑    </h2>
+        <table id="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Позиција</th>
+                    <th>Играч</th>
+                    <th>Вкупно поени</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>

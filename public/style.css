@@ -1,0 +1,235 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+h1,
+h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 40px;
+}
+
+#podium {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    /* Allow wrapping for small screens */
+}
+
+/* Player Card Styling */
+.player {
+    width: 150px;
+    height: 200px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    position: relative;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.medal-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Medal positioning */
+.badge {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    z-index: 99;
+}
+
+/* Keep player content centered */
+.player img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.player-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.player.dragging {
+    opacity: 0.5;
+}
+
+/* Table styling */
+table {
+    width: 80%;
+    margin: 0 auto 40px;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.table-container {
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling for mobile devices */
+    margin: 20px auto;
+    /* Center the table container */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+#save {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* Ensure the table doesn't shrink too much */
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+#leaderboard-table th:first-child,
+#leaderboard-table td:first-child {
+    width: 10%;
+    /* Small fixed width for Position */
+    text-align: center;
+    /* Center the text */
+}
+
+#leaderboard-table th:nth-child(2),
+#leaderboard-table td:nth-child(2),
+#leaderboard-table th:nth-child(3),
+#leaderboard-table td:nth-child(3) {
+    width: 45%;
+    /* Equal width for Player and Total Points */
+    text-align: center;
+    /* Align text to the left */
+}
+
+#leaderboard-table {
+    table-layout: fixed;
+    /* Ensures the column widths are respected */
+    width: 100%;
+    /* Full width of the container */
+    border-collapse: collapse;
+    /* Neater table borders */
+}
+
+#leaderboard-table th,
+#leaderboard-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    /* Optional: for better visual separation */
+}
+
+#leaderboard-table th {
+    background-color: #f8f8f8;
+    /* Optional: add background to the header */
+    text-align: center;
+    /* Center the text in the header */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #podium {
+        flex-direction: column;
+        /* Stack players vertically */
+        align-items: center;
+        gap: 10px;
+    }
+
+    .player {
+        width: 100%;
+        /* Full width on small screens */
+        max-width: 300px;
+        /* Optional max width */
+        height: auto;
+        /* Adjust height for smaller screens */
+    }
+
+    .badge {
+        top: -10px;
+        /* Adjust badge position for small screens */
+        font-size: 20px;
+    }
+
+    table {
+
+        /* Full width for small screens */
+        font-size: 14px;
+        /* Adjust font size */
+    }
+
+    th,
+    td {
+        padding: 5px;
+        /* Reduce padding */
+    }
+}
+
+@media (max-width: 480px) {
+
+    h1,
+    h2 {
+        font-size: 20px;
+        /* Reduce font size for headings */
+    }
+
+    .player img {
+        width: 60px;
+        /* Smaller images */
+        height: 60px;
+    }
+
+    .player-name {
+        font-size: 16px;
+        /* Adjust player name font size */
+    }
+
+    button[type="submit"] {
+        font-size: 16px;
+        padding: 10px 15px;
+        /* Adjust button size */
+    }
+}
