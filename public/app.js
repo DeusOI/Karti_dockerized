@@ -89,32 +89,30 @@ function updateGameTable() {
             console.error('Error fetching game data:', error);
         });
 }
-document.getElementById('export-button').addEventListener('click', function () {
-    const tables = document.querySelectorAll('table');
-    const exportContainer = document.createElement('div');
-    exportContainer.style.position = 'absolute';
-    exportContainer.style.top = '0';
-    exportContainer.style.left = '0';
-    exportContainer.style.zIndex = '9999';
-    exportContainer.style.backgroundColor = '#fff'; // Ensure background is white
-    document.body.appendChild(exportContainer);
 
-    tables.forEach(table => {
-        const clonedTable = table.cloneNode(true);
-        exportContainer.appendChild(clonedTable);
+function exportTableAsImage(tableId, filename) {
+    const tableElement = document.getElementById(tableId);
+
+    html2canvas(tableElement, {
+        scrollY: -window.scrollY, // Adjust for scrolling
+        scale: 2 // Higher scale for better quality
+    }).then(canvas => {
+        // Create an image from the canvas
+        const link = document.createElement('a');
+        link.download = `${filename}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }).catch(error => {
+        console.error('Error exporting table:', error);
     });
+}
 
-    // Add a small delay before capturing
-    setTimeout(() => {
-        html2canvas(exportContainer, { scale: 2 }).then(canvas => {
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'tables.png';
-            link.click();
-            document.body.removeChild(exportContainer);
-        });
-    }, 500); // 500ms delay
+
+
+document.getElementById('export-leaderboard-table').addEventListener('click', () => {
+    exportTableAsImage('leaderboard-table', 'Табела_со_резултати');
 });
+
 function deleteGame(event) {
     const gameId = parseInt(event.target.getAttribute('data-id'), 10);
 
