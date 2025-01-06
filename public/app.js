@@ -90,24 +90,24 @@ function updateGameTable() {
         });
 }
 
-function exportTableAsImage(tableId, filename) {
+function exportTableAsImage(tableId, baseFileName) {
     const tableElement = document.getElementById(tableId);
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    const fileName = `${baseFileName}_${today}.png`;
 
-    html2canvas(tableElement, {
-        scrollY: -window.scrollY, // Adjust for scrolling
-        scale: 2 // Higher scale for better quality
-    }).then(canvas => {
-        // Create an image from the canvas
+    html2canvas(tableElement).then(canvas => {
         const link = document.createElement('a');
-        link.download = `${filename}.png`;
         link.href = canvas.toDataURL('image/png');
+        link.download = fileName;
         link.click();
     }).catch(error => {
-        console.error('Error exporting table:', error);
+        console.error('Error exporting table as image:', error);
     });
 }
 
-
+document.getElementById('export-games-table').addEventListener('click', () => {
+    exportTableAsImage('games-table', 'Последни_партии');
+});
 
 document.getElementById('export-leaderboard-table').addEventListener('click', () => {
     exportTableAsImage('leaderboard-table', 'Табела_со_резултати');

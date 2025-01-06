@@ -5,6 +5,15 @@ body {
     margin: 20px;
 }
 
+caption {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+    color: #333;
+}
+
+
 h1,
 h2 {
     margin-bottom: 20px;
@@ -29,6 +38,15 @@ form {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+    }
+
+    .save-button {
+        margin-bottom: 20px;
+    }
+
+    #game-form {
+        width: 80%;
+        margin: auto;
     }
 
     .medal-container {
