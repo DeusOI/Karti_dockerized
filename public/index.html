@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <title>&#9824;&#9829;КАРТАЏИИ 2025&#9830;&#9827;</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -38,9 +39,11 @@
                     <div class="player-name">Грозданка</div>
                 </div>
             </div>
-            <div class="player position-4" draggable="true">
-                <img class="player-img" src="images/vase.jpg" alt="Васил" />
-                <div class="player-name">Васил</div>
+            <div class="medal-container">
+                <div class="player position-4" draggable="true">
+                    <img class="player-img" src="images/vase.jpg" alt="Васил" />
+                    <div class="player-name">Васил</div>
+                </div>
             </div>
         </div>
 
@@ -50,7 +53,7 @@
     </form>
 
     <div class="table-container">
-        <h2>    🃏   Последни партии    🃏   </h2>
+        <h2> 🃏 Последни партии 🃏 </h2>
         <table id="games-table">
             <thead>
                 <tr>
@@ -68,7 +71,7 @@
     </div>
 
     <div class="table-container">
-        <h2>    👑  Табела со резултати   👑    </h2>
+        <h2> 👑 Табела со резултати 👑 </h2>
         <table id="leaderboard-table">
             <thead>
                 <tr>
@@ -79,7 +82,9 @@
             </thead>
             <tbody></tbody>
         </table>
+
     </div>
+    <button id="export-button">Export Tables as Image</button>
 
 
     <script src="app.js"></script>

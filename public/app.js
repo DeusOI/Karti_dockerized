@@ -90,7 +90,26 @@ function updateGameTable() {
         });
 }
 
+document.getElementById('export-button').addEventListener('click', function () {
+    const tables = document.querySelectorAll('table');
+    const exportContainer = document.createElement('div');
+    exportContainer.style.position = 'absolute';
+    exportContainer.style.top = '-9999px';
+    document.body.appendChild(exportContainer);
 
+    tables.forEach(table => {
+        const clonedTable = table.cloneNode(true);
+        exportContainer.appendChild(clonedTable);
+    });
+
+    html2canvas(exportContainer).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'tables.png';
+        link.click();
+        document.body.removeChild(exportContainer);
+    });
+});
 function deleteGame(event) {
     const gameId = parseInt(event.target.getAttribute('data-id'), 10);
 
