@@ -89,12 +89,14 @@ function updateGameTable() {
             console.error('Error fetching game data:', error);
         });
 }
-
 document.getElementById('export-button').addEventListener('click', function () {
     const tables = document.querySelectorAll('table');
     const exportContainer = document.createElement('div');
     exportContainer.style.position = 'absolute';
-    exportContainer.style.top = '-9999px';
+    exportContainer.style.top = '0';
+    exportContainer.style.left = '0';
+    exportContainer.style.zIndex = '9999';
+    exportContainer.style.backgroundColor = '#fff'; // Ensure background is white
     document.body.appendChild(exportContainer);
 
     tables.forEach(table => {
@@ -102,13 +104,16 @@ document.getElementById('export-button').addEventListener('click', function () {
         exportContainer.appendChild(clonedTable);
     });
 
-    html2canvas(exportContainer).then(canvas => {
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png');
-        link.download = 'tables.png';
-        link.click();
-        document.body.removeChild(exportContainer);
-    });
+    // Add a small delay before capturing
+    setTimeout(() => {
+        html2canvas(exportContainer, { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'tables.png';
+            link.click();
+            document.body.removeChild(exportContainer);
+        });
+    }, 500); // 500ms delay
 });
 function deleteGame(event) {
     const gameId = parseInt(event.target.getAttribute('data-id'), 10);
