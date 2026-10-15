@@ -1,0 +1,32 @@
+# For a server that already runs Coolify: no Caddy, Coolify's proxy handles HTTPS.
+# Start with: docker compose -f docker-compose.coolify.yml up -d --build
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      FAMILY_PIN: ${FAMILY_PIN:?Set FAMILY_PIN in the .env file}
+      DATA_DIR: /app/data
+    volumes:
+      - karti_data:/app/data
+    networks:
+      - coolify
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - traefik.http.routers.karti-http.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.karti-http.entrypoints=http
+      - traefik.http.routers.karti-http.middlewares=karti-https
+      - traefik.http.middlewares.karti-https.redirectscheme.scheme=https
+      - traefik.http.routers.karti.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.karti.entrypoints=https
+      - traefik.http.routers.karti.tls=true
+      - traefik.http.routers.karti.tls.certresolver=letsencrypt
+      - traefik.http.services.karti.loadbalancer.server.port=3000
+
+volumes:
+  karti_data:
+
+networks:
+  coolify:
+    external: true
