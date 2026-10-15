@@ -1,94 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mk">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <title>&#9824;&#9829;КАРТАЏИИ 2025&#9830;&#9827;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Картаџии</title>
+    <meta name="theme-color" content="#0f3d2e">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Картаџии">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <header class="top">
+        <h1>&#9824; &#9829; <span id="title">КАРТАЏИИ</span> &#9830; &#9827;</h1>
+        <div id="sync-status" class="sync-status" hidden></div>
+    </header>
 
-    <h1> &#9824; &#9829; КАРТАЏИИ 2025 &#9830; &#9827;</h1>
-    <form id="game-form">
-        <label for="game-date">Дата:</label>
-        <input type="date" id="game-date" required>
-        <h2>Постави резултат од последната игра:</h2>
-        <div id="podium">
+    <main>
+        <!-- New game -->
+        <section id="tab-new" class="tab active" aria-labelledby="nav-new">
+            <label class="date-row">
+                <span>Датум</span>
+                <input type="date" id="game-date" required>
+            </label>
 
-            <div class="medal-container">
-                <div class="badge gold">🥇</div>
-                <div class="player position-1" draggable="true">
-                    <img class="player-img" src="images/eli.jpg" alt="Елена" />
-                    <div class="player-name">Елена</div>
-                </div>
+            <p class="hint" id="rank-hint">Допрете ги играчите по редот како завршија</p>
+
+            <div id="players" class="players"></div>
+
+            <div class="actions">
+                <button id="clear" class="btn btn-ghost" type="button">Исчисти</button>
+                <button id="save" class="btn btn-primary" type="button" disabled>Зачувај партија</button>
             </div>
-            <div class="medal-container">
-                <div class="badge silver">🥈</div>
-                <div class="player position-2" draggable="true">
-                    <img class="player-img" src="images/pance.jpg" alt="Панче" />
-                    <div class="player-name">Панче</div>
-                </div>
-            </div>
-            <div class="medal-container">
-                <div class="badge bronze">🥉</div>
-                <div class="player position-3" draggable="true">
-                    <img class="player-img" src="images/goci.jpg" alt="Грозданка" />
-                    <div class="player-name">Грозданка</div>
-                </div>
-            </div>
-            <div class="medal-container">
-                <div class="player position-4" draggable="true">
-                    <img class="player-img" src="images/vase.jpg" alt="Васил" />
-                    <div class="player-name">Васил</div>
-                </div>
+        </section>
+
+        <!-- Standings -->
+        <section id="tab-table" class="tab" aria-labelledby="nav-table">
+            <div id="seasons" class="chips" role="tablist" aria-label="Сезона"></div>
+            <ol id="standings" class="standings"></ol>
+            <p id="standings-empty" class="empty" hidden>Сè уште нема партии во оваа сезона.</p>
+            <button id="share" class="btn btn-primary wide" type="button">Сподели табела</button>
+        </section>
+
+        <!-- Game history -->
+        <section id="tab-games" class="tab" aria-labelledby="nav-games">
+            <ul id="history" class="history"></ul>
+            <p id="history-empty" class="empty" hidden>Сè уште нема партии.</p>
+            <button id="more" class="btn btn-ghost wide" type="button" hidden>Прикажи повеќе</button>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button id="nav-new" class="nav-btn active" data-tab="tab-new" type="button">
+            <span class="nav-icon">&#10133;</span>Нова игра
+        </button>
+        <button id="nav-table" class="nav-btn" data-tab="tab-table" type="button">
+            <span class="nav-icon">&#128081;</span>Табела
+        </button>
+        <button id="nav-games" class="nav-btn" data-tab="tab-games" type="button">
+            <span class="nav-icon">&#127183;</span>Партии
+        </button>
+    </nav>
+
+    <!-- Install hint, shown only in the browser (not once installed) -->
+    <div id="install" class="install" hidden>
+        <p id="install-text"></p>
+        <div class="install-actions">
+            <button id="install-btn" class="btn btn-primary" type="button" hidden>Инсталирај</button>
+            <button id="install-close" class="btn btn-ghost" type="button">Подоцна</button>
+        </div>
+    </div>
+
+    <!-- PIN screen -->
+    <div id="pin-screen" class="overlay" hidden>
+        <form id="pin-form" class="sheet">
+            <h2>&#128274; Семеен PIN</h2>
+            <p>Внесете го PIN-от за да ги гледате и зачувувате партиите.</p>
+            <input id="pin-input" type="password" inputmode="numeric" autocomplete="current-password" required>
+            <p id="pin-error" class="error" hidden>Погрешен PIN, обидете се повторно.</p>
+            <button class="btn btn-primary wide" type="submit">Влези</button>
+        </form>
+    </div>
+
+    <!-- Confirm dialog -->
+    <div id="confirm" class="overlay" hidden>
+        <div class="sheet">
+            <p id="confirm-text"></p>
+            <div class="actions">
+                <button id="confirm-no" class="btn btn-ghost" type="button">Не</button>
+                <button id="confirm-yes" class="btn btn-danger" type="button">Избриши</button>
             </div>
         </div>
-
-
-
-        <button id="save" type="submit">Зачувај игра</button>
-    </form>
-
-    <div class="table-container">
-
-        <table id="games-table">
-            <caption> 🃏 Последни партии 🃏 </caption>
-            <thead>
-                <tr>
-
-                    <th>Дата</th>
-                    <th>Прво место</th>
-                    <th>Второ место</th>
-                    <th>Трето место</th>
-                    <th>Четврто место</th>
-                    <th>Избриши</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <button class="save-button" id="export-games-table">Експортирај слика</button>
     </div>
 
-    <div class="table-container">
-
-        <table id="leaderboard-table">
-            <caption>👑 Табела со резултати 👑</caption>
-            <thead>
-                <tr>
-                    <th>Позиција</th>
-                    <th>Играч</th>
-                    <th>Вкупно поени</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <button class="save-button" id="export-leaderboard-table">Експортирај слика</button>
-    </div>
-
-
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="app.js"></script>
 </body>

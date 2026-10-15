@@ -1,0 +1,11 @@
+node_modules
+.git
+.vscode
+data
+.env
+*.md
+public/images/1000_F_*
+public/images/viber_*
+public/images/prvo.jpg
+public/images/vtoro.jpg
+public/images/treto.jpg

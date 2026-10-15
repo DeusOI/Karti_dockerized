@@ -1,0 +1,31 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      FAMILY_PIN: ${FAMILY_PIN:?Set FAMILY_PIN in the .env file}
+      DATA_DIR: /app/data
+    volumes:
+      - karti_data:/app/data
+
+  # Caddy gets a free HTTPS certificate automatically.
+  # Phones only offer "install app" on HTTPS sites.
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in the .env file}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  karti_data:
+  caddy_data:
+  caddy_config:

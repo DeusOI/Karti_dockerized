@@ -1,20 +1,17 @@
-# Use Node.js as the base image
-FROM node:16
+FROM node:22-alpine
 
-# Set the working directory inside the container
 WORKDIR /app
+ENV NODE_ENV=production
 
-# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
+RUN npm ci --omit=dev
 
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application (after dependencies are installed)
 COPY . .
 
-# Expose the port the app will run on (React default port is 3000)
-EXPOSE 3000
+# Scores live in /app/data, which docker-compose keeps in a volume
+RUN mkdir -p /app/data && chown node:node /app/data
+USER node
 
-# Command to run the React app in development mode
+EXPOSE 3000
+HEALTHCHECK --interval=1m --timeout=5s CMD wget -qO- http://localhost:3000/api/health || exit 1
 CMD ["node", "server.js"]
