@@ -3,6 +3,9 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
+// Read settings (FAMILY_PIN, PORT...) from a .env file next to this one, if there is one
+try { process.loadEnvFile(path.join(__dirname, '.env')); } catch { /* no .env file */ }
+
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const GAMES_FILE = path.join(DATA_DIR, 'games.json');
